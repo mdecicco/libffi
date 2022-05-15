@@ -5,9 +5,11 @@
 	Originator:		Blake Chaffin	6/18/2007
 */
 
-/* { dg-do run { xfail strongarm*-*-* xscale*-*-* } } */
+/* { dg-do run { xfail strongarm*-*-* xscale*-*-* wasm32*-*-* } } */
 /* { dg-options -mlong-double-128 { target powerpc64*-*-linux* } } */
 /* { dg-options -Wformat=0 { target moxie*-*-elf or1k-*-* } } */
+
+#include <inttypes.h>
 
 #include "ffitest.h"
 
