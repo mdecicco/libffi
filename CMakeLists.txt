@@ -1,9 +1,9 @@
-cmake_minimum_required(VERSION 2.8.8)
+cmake_minimum_required(VERSION 3.0.0)
 project(libffi C)
 
 set(SOURCES_LIST
     src/closures.c
-    src/java_raw_api
+    src/java_raw_api.c
     src/prep_cif.c
     src/raw_api.c
     src/types.c
@@ -21,10 +21,12 @@ endif()
 include(configure_platform.cmake)
 include(configure_options.cmake)
 
-file(COPY ${FFI_CONFIG_FILE} DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-file(COPY src/${TARGETDIR}/ffitarget.h DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/include)
+set(FFI_INCLUDE_DIR ${CMAKE_CURRENT_BINARY_DIR}/include CACHE STRING "FFI Include Directory")
 
-include_directories(${CMAKE_CURRENT_BINARY_DIR}/include)
+file(COPY ${FFI_CONFIG_FILE} DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+file(COPY src/${TARGETDIR}/ffitarget.h DESTINATION ${FFI_INCLUDE_DIR})
+
+include_directories(${FFI_INCLUDE_DIR})
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 include_directories(include)
 
@@ -44,6 +46,6 @@ set_target_properties(ffi_static PROPERTIES OUTPUT_NAME ffi)
 set_target_properties(ffi_shared PROPERTIES OUTPUT_NAME ffi)
 
 install(FILES
-    ${CMAKE_CURRENT_BINARY_DIR}/include/ffi.h
-    ${CMAKE_CURRENT_BINARY_DIR}/include/ffitarget.h
+    ${FFI_INCLUDE_DIR}/ffi.h
+    ${FFI_INCLUDE_DIR}/ffitarget.h
     DESTINATION include)
