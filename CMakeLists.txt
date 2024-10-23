@@ -35,15 +35,11 @@ add_definitions(-DFFI_BUILDING)
 add_library(ffi_static STATIC ${SOURCES_LIST})
 
 if(MSVC)
-    add_definitions(-DFFI_BUILDING_DLL)
-    set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 elseif(CMAKE_SYSTEM_NAME MATCHES Darwin)
     set(CMAKE_MACOSX_RPATH 1)
 endif()
-add_library(ffi_shared SHARED ${SOURCES_LIST})
 
 set_target_properties(ffi_static PROPERTIES OUTPUT_NAME ffi)
-set_target_properties(ffi_shared PROPERTIES OUTPUT_NAME ffi)
 
 install(FILES
     ${FFI_INCLUDE_DIR}/ffi.h
